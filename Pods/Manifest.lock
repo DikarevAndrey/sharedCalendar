@@ -1,0 +1,18 @@
+PODS:
+  - CalendarKit (0.2.3):
+    - DateToolsSwift
+    - Neon
+  - DateToolsSwift (2.0.3)
+  - Neon (0.4.0)
+
+DEPENDENCIES:
+  - CalendarKit
+
+SPEC CHECKSUMS:
+  CalendarKit: 13213d0183a33ba04eac35bea3e87b493c35953d
+  DateToolsSwift: bf69bf9056d9e53c5c03f06e51f219b9b8b02f9e
+  Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
+
+PODFILE CHECKSUM: 68298eed0278e0790e89030850559ff94ba68ab7
+
+COCOAPODS: 1.4.0
