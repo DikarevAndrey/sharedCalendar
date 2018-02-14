@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		002159D92029D1A8008E227C /* EventAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002159D82029D1A8008E227C /* EventAddingViewController.swift */; };
 		002159DB202A2F17008E227C /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002159DA202A2F17008E227C /* EventsViewController.swift */; };
+		0025C4282034B4BA005CD689 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025C4272034B4BA005CD689 /* User.swift */; };
 		0058E72C201E253A00E5678D /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0058E72B201E253A00E5678D /* Login.swift */; };
 		00A12116201B73D200E07CFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12115201B73D200E07CFE /* AppDelegate.swift */; };
 		00A12118201B73D200E07CFE /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12117201B73D200E07CFE /* Groups.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		002159D82029D1A8008E227C /* EventAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAddingViewController.swift; sourceTree = "<group>"; };
 		002159DA202A2F17008E227C /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
+		0025C4272034B4BA005CD689 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0058E72B201E253A00E5678D /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		00A12112201B73D200E07CFE /* Shared Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shared Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A12115201B73D200E07CFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				002159DA202A2F17008E227C /* EventsViewController.swift */,
 				002159D82029D1A8008E227C /* EventAddingViewController.swift */,
 				00B987E3201FB4210008F27D /* Registration.swift */,
+				0025C4272034B4BA005CD689 /* User.swift */,
 				00A1211C201B73D200E07CFE /* Assets.xcassets */,
 				00A1211E201B73D200E07CFE /* LaunchScreen.storyboard */,
 				00A12121201B73D200E07CFE /* Info.plist */,
@@ -325,12 +328,14 @@
 				"${BUILT_PRODUCTS_DIR}/CalendarKit/CalendarKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DateToolsSwift/DateToolsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CalendarKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateToolsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -368,6 +373,7 @@
 				00A12116201B73D200E07CFE /* AppDelegate.swift in Sources */,
 				002159D92029D1A8008E227C /* EventAddingViewController.swift in Sources */,
 				002159DB202A2F17008E227C /* EventsViewController.swift in Sources */,
+				0025C4282034B4BA005CD689 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +481,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -523,6 +530,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -2,8 +2,8 @@
 //  Registration.swift
 //  Shared Timetable
 //
-//  Created by Даниил Кудрявцев on 29/01/2018.
-//  Copyright © 2018 Даниил Кудрявцев. All rights reserved.
+//  Created by Даниил Пес Кудрявцев on 29/01/2018.
+//  Copyright © 2018 Даниил Пес Кудрявцев. All rights reserved.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ var name: String = ""
 var surname: String = ""
 var patronymic: String = ""
 
-class FirstStepRegistrationViewController: UIViewController {
+class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var nextBarButtonItem: UIBarButtonItem!
     
@@ -36,8 +36,26 @@ class FirstStepRegistrationViewController: UIViewController {
         nextBarButtonItem.isEnabled = false
         nameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         surnameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        
+        //for function textFieldShouldReturn
+        self.nameTextField.delegate = self
+        self.surnameTextField.delegate = self
+        self.patronymicTextField.delegate = self
     }
     
+    //Hides keyboard while tapping outside the text field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    //Hides keyboard when "return" button pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return (true)
+    }
+    
+
     func editingChanged(_ textField: UITextField) {
         guard
             let name = nameTextField.text, !name.isEmpty,
@@ -58,7 +76,7 @@ class FirstStepRegistrationViewController: UIViewController {
     }
 }
 
-class LastStepRegistrationViewController: UIViewController {
+class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var registerBarButtonItem: UIBarButtonItem!
@@ -87,6 +105,23 @@ class LastStepRegistrationViewController: UIViewController {
         
         passwordTextField.addTarget(self, action: #selector(passwordsMatch), for: .editingChanged)
         passwordConfirmationTextField.addTarget(self, action: #selector(passwordsMatch), for: .editingChanged)
+        
+        //for function textFieldShouldReturn
+        self.loginTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.passwordConfirmationTextField.delegate = self
+    }
+    
+    //Hides keyboard while tapping outside the text field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    //Hides keyboard when "return" button pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return (true)
     }
     
     func editingChanged(_ textField: UITextField) {
@@ -123,12 +158,10 @@ class LastStepRegistrationViewController: UIViewController {
     @IBAction func registerAction(_ sender: Any) {
         let login = loginTextField.text!
         let password = passwordTextField.text!
-        //let myUrl = "https://mighty-springs-49939.herokuapp.com/signup?"
         let myUrl = "http://188.166.110.14/signup?"
         let request = NSMutableURLRequest(url: URL(string: myUrl)!)
         request.httpMethod = "POST"
         let postString = "name=\(name)&surname=\(surname)&patronymic=\(patronymic)&login=\(login)&password=\(password)"
-        //print(postString)
         request.httpBody = postString.data(using: String.Encoding.utf8)
         URLSession.shared.dataTask(with: request as URLRequest) {
             (_, response, error) in
@@ -146,6 +179,7 @@ class LastStepRegistrationViewController: UIViewController {
                 //print("response status: \(status)")
                 switch status {
                 case 201:
+                    user.relogin = false
                     self.dismiss(animated: true, completion: nil)
                 case 409:
                     self.warningLabel.text = "The user with this login already exists"

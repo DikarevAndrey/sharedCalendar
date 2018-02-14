@@ -2,8 +2,8 @@
 //  EventAddingViewController.swift
 //  Shared Timetable
 //
-//  Created by Даниил Кудрявцев on 06/02/2018.
-//  Copyright © 2018 Даниил Кудрявцев. All rights reserved.
+//  Created by Даниил Пес Кудрявцев on 06/02/2018.
+//  Copyright © 2018 Даниил Пес Кудрявцев. All rights reserved.
 //
 
 import CalendarKit

@@ -277,7 +277,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Uc-eP-QMT">
-                                                    <rect key="frame" x="85" y="8" width="42" height="21"/>
+                                                    <rect key="frame" x="85" y="8" width="214" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -318,6 +318,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="tableView" destination="YXa-md-wSK" id="OA8-mG-0XY"/>
                         <segue destination="NQa-fD-0LF" kind="presentation" identifier="authorization" id="ORK-GV-oqW"/>
                         <segue destination="S2F-8P-JHG" kind="show" identifier="newGroup" id="cZS-0e-Cs6"/>
                     </connections>

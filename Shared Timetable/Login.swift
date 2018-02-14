@@ -2,13 +2,13 @@
 //  Login.swift
 //  Shared Timetable
 //
-//  Created by Даниил Кудрявцев on 28/01/2018.
-//  Copyright © 2018 Даниил Кудрявцев. All rights reserved.
+//  Created by Даниил Пес Кудрявцев on 28/01/2018.
+//  Copyright © 2018 Даниил Пес Кудрявцев. All rights reserved.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     
@@ -35,6 +35,22 @@ class LoginViewController: UIViewController {
         logInBarButtonItem.isEnabled = false
         loginTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        
+        //for function textFieldShouldReturn
+        self.loginTextField.delegate = self
+        self.passwordTextField.delegate = self
+    }
+    
+    //Hides keyboard while tapping outside the text field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    //Hides keyboard when "return" button pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return (true)
     }
     
     func editingChanged(_ textField: UITextField) {
@@ -53,7 +69,6 @@ class LoginViewController: UIViewController {
         let login = loginTextField.text!
         let password = passwordTextField.text!
         let postString = "login=\(login)&password=\(password)"
-        //let myURL = URL(string: "https://mighty-springs-49939.herokuapp.com/signin?\(postString)")!
         let myURL = URL(string: "http://188.166.110.14/signin?\(postString)")!
         let session = URLSession(configuration: URLSessionConfiguration.default)
         session.dataTask(with: myURL) { (_, response, error) in
