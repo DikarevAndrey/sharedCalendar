@@ -54,14 +54,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func editingChanged(_ textField: UITextField) {
-        guard
-            let login = loginTextField.text, !login.isEmpty,
-            let password = passwordTextField.text, !password.isEmpty
-        else {
-                self.logInBarButtonItem.isEnabled = false
-                return
+        let login = loginTextField.text!
+        let password = passwordTextField.text!
+        warningLabel.text = ""
+        if !asciiCapable(s: login) || !asciiCapable(s: password) || !asciiCapable(s: password) {
+            warningLabel.text = "Only latin symbols, ., -, _ are expected"
+            warningLabel.textColor = UIColor.white
+            logInBarButtonItem.isEnabled = false
+            return
+        }
+        if login.isEmpty || password.isEmpty || !asciiCapable(s: login) || !asciiCapable(s: password) {
+            logInBarButtonItem.isEnabled = false
+            return
         }
         logInBarButtonItem.isEnabled = true
+    }
+    
+    func asciiCapable(s: String) -> Bool {
+        var flag = true
+        for c in s {
+            if !((c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "." || c == "_" || c == "-" || c >= "0" && c <= "9") {
+                flag = false
+            }
+        }
+        return flag
     }
     
 
@@ -91,10 +107,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     defaults.setValue(login, forKey: "login")
                     defaults.setValue(password, forKey: "password")
                     defaults.synchronize()
+                    user.relogin = true
                     self.dismiss(animated: true, completion: nil)
                 case 401:
                     self.warningLabel.text = "Wrong login or password"
-                    self.warningLabel.textColor = UIColor.red
+                    self.warningLabel.textColor = UIColor.white
                 default:
                     print("unknown status code")
                 }

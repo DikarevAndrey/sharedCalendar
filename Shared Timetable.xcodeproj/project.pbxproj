@@ -10,6 +10,7 @@
 		002159D92029D1A8008E227C /* EventAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002159D82029D1A8008E227C /* EventAddingViewController.swift */; };
 		002159DB202A2F17008E227C /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002159DA202A2F17008E227C /* EventsViewController.swift */; };
 		0025C4282034B4BA005CD689 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025C4272034B4BA005CD689 /* User.swift */; };
+		0049FAB22039AB99001FA2E1 /* NewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049FAB12039AB99001FA2E1 /* NewGroup.swift */; };
 		0058E72C201E253A00E5678D /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0058E72B201E253A00E5678D /* Login.swift */; };
 		00A12116201B73D200E07CFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12115201B73D200E07CFE /* AppDelegate.swift */; };
 		00A12118201B73D200E07CFE /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12117201B73D200E07CFE /* Groups.swift */; };
@@ -43,6 +44,7 @@
 		002159D82029D1A8008E227C /* EventAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAddingViewController.swift; sourceTree = "<group>"; };
 		002159DA202A2F17008E227C /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		0025C4272034B4BA005CD689 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0049FAB12039AB99001FA2E1 /* NewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroup.swift; sourceTree = "<group>"; };
 		0058E72B201E253A00E5678D /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		00A12112201B73D200E07CFE /* Shared Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shared Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A12115201B73D200E07CFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			children = (
 				00A12115201B73D200E07CFE /* AppDelegate.swift */,
 				00A12117201B73D200E07CFE /* Groups.swift */,
+				0049FAB12039AB99001FA2E1 /* NewGroup.swift */,
 				0058E72B201E253A00E5678D /* Login.swift */,
 				00A12119201B73D200E07CFE /* Main.storyboard */,
 				002159DA202A2F17008E227C /* EventsViewController.swift */,
@@ -367,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0049FAB22039AB99001FA2E1 /* NewGroup.swift in Sources */,
 				00B987E4201FB4210008F27D /* Registration.swift in Sources */,
 				0058E72C201E253A00E5678D /* Login.swift in Sources */,
 				00A12118201B73D200E07CFE /* Groups.swift in Sources */,

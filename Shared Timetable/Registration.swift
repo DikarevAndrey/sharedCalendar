@@ -55,7 +55,7 @@ class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate
         return (true)
     }
     
-
+    //Implements every time textField.text is changed
     func editingChanged(_ textField: UITextField) {
         guard
             let name = nameTextField.text, !name.isEmpty,
@@ -74,6 +74,7 @@ class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate
         patronymic = patronymicTextField.text!
         performSegue(withIdentifier: "next", sender: nil)
     }
+    
 }
 
 class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate {
@@ -124,35 +125,59 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
         return (true)
     }
     
+    func asciiCapable(s: String) -> Bool {
+        var flag = true
+        for c in s {
+            if !((c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "." || c == "_" || c == "-" || c >= "0" && c <= "9") {
+                flag = false
+            }
+        }
+        return flag
+    }
+    
     func editingChanged(_ textField: UITextField) {
-        guard
-            let login = loginTextField.text, !login.isEmpty,
-            let password = passwordTextField.text, !password.isEmpty,
-            let passwordConfirmation = passwordConfirmationTextField.text, !passwordConfirmation.isEmpty
-        else {
-                self.registerBarButtonItem.isEnabled = false
-                return
+        let login = loginTextField.text!
+        let password = passwordTextField.text!
+        let passwordConfirmation = passwordConfirmationTextField.text!
+        warningLabel.text = ""
+        if !asciiCapable(s: login) || !asciiCapable(s: password) || !asciiCapable(s: passwordConfirmation) {
+            warningLabel.text = "Only latin symbols, ., -, _ are expected"
+            warningLabel.textColor = UIColor.white
+            registerBarButtonItem.isEnabled = false
+            return
+        }
+        if login.isEmpty || password.isEmpty || passwordConfirmation.isEmpty {
+            registerBarButtonItem.isEnabled = false
+            return
         }
         registerBarButtonItem.isEnabled = true
     }
     
     func passwordsMatch(_ textField: UITextField) {
+        let login = loginTextField.text!
         let password = passwordTextField.text!
         let passwordConfirmation = passwordConfirmationTextField.text!
-        if passwordConfirmation.isEmpty || password.isEmpty {
-            warningLabel.text = ""
+        warningLabel.text = ""
+        if !asciiCapable(s: login) || !asciiCapable(s: password) || !asciiCapable(s: passwordConfirmation) {
+            warningLabel.text = "Only latin symbols, ., -, _ are expected"
+            warningLabel.textColor = UIColor.white
+            registerBarButtonItem.isEnabled = false
             return
         }
-        guard
-            password == passwordConfirmation
-            else {
-                warningLabel.text = "Passwords do not match"
-                warningLabel.textColor = UIColor.red
-                self.registerBarButtonItem.isEnabled = false
-                return
+        if passwordConfirmation.isEmpty || password.isEmpty || passwordConfirmation.count < password.count {
+            registerBarButtonItem.isEnabled = false
+            return
         }
-        warningLabel.text = ""
-        registerBarButtonItem.isEnabled = true
+        if password != passwordConfirmation {
+            warningLabel.text = "Passwords do not match"
+            warningLabel.textColor = UIColor.white
+            registerBarButtonItem.isEnabled = false
+            return
+        }
+        if login.isEmpty {
+            registerBarButtonItem.isEnabled = false
+        }
+        registerBarButtonItem.isEnabled = false
     }
     
     @IBAction func registerAction(_ sender: Any) {
@@ -169,7 +194,7 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
                 guard let response = response as? HTTPURLResponse else {
                     // Error handle
                     self.warningLabel.text = "No internet connection"
-                    self.warningLabel.textColor = UIColor.red
+                    self.warningLabel.textColor = UIColor.white
                     return
                 }
                 let status = response.statusCode
@@ -179,14 +204,17 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
                 //print("response status: \(status)")
                 switch status {
                 case 201:
-                    user.relogin = false
+                    let defaults = UserDefaults.standard
+                    defaults.setValue(login, forKey: "login")
+                    defaults.setValue(password, forKey: "password")
+                    defaults.synchronize()
                     self.dismiss(animated: true, completion: nil)
                 case 409:
                     self.warningLabel.text = "The user with this login already exists"
-                    self.warningLabel.textColor = UIColor.red
+                    self.warningLabel.textColor = UIColor.white
                 default:
                     self.warningLabel.text = "Unknown status code"
-                    self.warningLabel.textColor = UIColor.red
+                    self.warningLabel.textColor = UIColor.white
                 }
             }
         }.resume()

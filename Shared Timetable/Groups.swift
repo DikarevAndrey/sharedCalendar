@@ -8,7 +8,6 @@
 
 import UIKit
 import CalendarKit
-import ObjectMapper
 import Foundation
 
 class Group {
@@ -21,7 +20,6 @@ let user = User()
 class GroupsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     
-    //var relogin = true
     @IBOutlet weak var tableView: UITableView!
     var amountOfGroups: Int?
     var groups = [Group]()
@@ -43,7 +41,6 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
         print(login)
         print(password)
         if login.isEmpty || password.isEmpty {
-            
             print("Not logged in")
             self.performSegue(withIdentifier: "authorization", sender: nil)
         }
@@ -80,7 +77,7 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
         URLSession.shared.dataTask(with: myURL) { (data, response, error) -> Void in
             
             guard let data = data else {
-                print("kek1")
+                print("No data received")
                 return
             }
             do {
@@ -91,6 +88,7 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
                     }
                     print(self.amountOfGroups!)
                     var groups = [Group]()
+                    //Main thread implementation
                     if self.amountOfGroups! > 0 {
                         let dictionary = jsonObject["groups"] as? [[String:Any]]
                         for groupInfo in dictionary! {
@@ -101,11 +99,14 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
                             print(group.id!)
                             groups.append(group)
                         }
+                        //Main thread implementation
                         DispatchQueue.main.async {
                             self.groups = groups
-                            self.tableView.reloadData()
-                            user.relogin = false
                         }
+                    }
+                    //Main thread implementation
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
                     }
                 } else {
                     print("json failed")
@@ -114,6 +115,9 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
                 print(error.localizedDescription)
             }
             }.resume()
+        
+        //End of groups information receiving
+        user.relogin = false
     }
     
     //Logging out
@@ -128,8 +132,8 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as! LabelCell //cell - ячейка таблицы
-        cell.label1.text = groups[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell") as! GroupsCell //cell - ячейка таблицы
+        cell.cellLabel.text = groups[indexPath.row].name
         return cell
     }
     //возвращает количество ячеек
@@ -161,8 +165,9 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
-class LabelCell: UITableViewCell {
+class GroupsCell: UITableViewCell {
     
-    @IBOutlet weak var label1: UILabel!
+    @IBOutlet weak var cellLabel: UILabel!
+
 }
 
