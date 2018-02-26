@@ -10,9 +10,13 @@ import UIKit
 import CalendarKit
 import Foundation
 
-class NewGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+var members = [String]()
+
+class MembersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     
+    @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var nextBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     var amountOfUsers: Int?
     var users = [String]()
@@ -30,7 +34,13 @@ class NewGroupViewController: UIViewController, UITableViewDataSource, UITableVi
         searchBar.keyboardType = UIKeyboardType.asciiCapable
         super.viewDidLoad()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        nextBarButtonItem.isEnabled = false
+        if members.count > 0 {
+            nextBarButtonItem.isEnabled = true
+        }
+    }
     
     //Hides keyboard when "search" button pressed
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -62,6 +72,10 @@ class NewGroupViewController: UIViewController, UITableViewDataSource, UITableVi
             let myURL = URL(string: "http://188.166.110.14/find_users?\(postString)")!
             URLSession.shared.dataTask(with: myURL) { (data, response, error) -> Void in
                 
+                guard let response = response as? HTTPURLResponse else {
+                    // Error handle
+                    return
+                }
                 guard let data = data else {
                     print("No data received")
                     return
@@ -69,15 +83,22 @@ class NewGroupViewController: UIViewController, UITableViewDataSource, UITableVi
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
                         self.amountOfUsers = jsonObject["amount"] as? Int
-                        if self.amountOfUsers == nil {
-                            print("nil")
-                        }
-                        print(self.amountOfUsers!)
-                        //Main thread implementation
                         if self.amountOfUsers! > 0 {
                             let users = jsonObject["users"] as? [String]
+                            let defaults = UserDefaults.standard
+                            let userLogin = defaults.string(forKey: "login")
+                            var usersCopy = [String]()
+                            for user in users! {
+                                if user != userLogin {
+                                    usersCopy.append(user)
+                                }
+                                else {
+                                    self.amountOfUsers! = self.amountOfUsers! - 1
+                                }
+                            }
                             DispatchQueue.main.async {
-                                self.users = users!
+                                print(self.amountOfUsers!)
+                                self.users = usersCopy
                             }
                         }
                         DispatchQueue.main.async {
@@ -97,36 +118,75 @@ class NewGroupViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func nextAction(_ sender: Any) {
+        performSegue(withIdentifier: "newGroupNext", sender: nil)
+    }
+    
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newGroupCell") as! NewGroupCell //cell - ячейка таблицы
         cell.cellLabel.text = users[indexPath.row]
+        cell.accessoryType = .none
         return cell
     }
     //возвращает количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if amountOfUsers != nil {
-            return amountOfUsers!
+        if amountOfUsers == nil {
+            return 0
         }
-        return 0
+        return amountOfUsers!
     }
     //возвращает количество секций, то есть 1
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    //отвечает за заголовок
+    //отвечает за заголовок таблицы
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return ""
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+            var copyMembers = [String]()
+            for m in members {
+                if m != users[indexPath.row] {
+                    copyMembers.append(m)
+                }
+            }
+            members = copyMembers
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
+        else {
+            members.append(users[indexPath.row])
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+        if members.count > 0 {
+            nextBarButtonItem.isEnabled = true
+        } else {
+            nextBarButtonItem.isEnabled = false
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 class NewGroupCell: UITableViewCell {
-    
     @IBOutlet weak var cellLabel: UILabel!
+}
+
+class GroupCreatingViewController: UIViewController {
+    
+    @IBOutlet weak var groupNameStripLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        groupNameStripLabel.backgroundColor = UIColor.gray
+    }
     
 }

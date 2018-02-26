@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared Timetable/Login.swift"
+            timestampString = "541369076.157612"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "LoginViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shared_Timetable.LoginViewController.warningLabel.getter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
+                  moduleName = "Shared Timetable"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DaniilKudryavtsev/Documents/GitHub/sharedCalendar/Shared%20Timetable/Login.swift"
+                  timestampString = "541171298.25439"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shared_Timetable.LoginViewController.warningLabel.setter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
+                  moduleName = "Shared Timetable"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DaniilKudryavtsev/Documents/GitHub/sharedCalendar/Shared%20Timetable/Login.swift"
+                  timestampString = "541171298.258159"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shared_Timetable.LoginViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Shared_Timetable.LoginViewController"
+                  moduleName = "Shared Timetable"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DaniilKudryavtsev/Documents/GitHub/sharedCalendar/Shared%20Timetable/Login.swift"
+                  timestampString = "541171298.260156"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "380">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shared_Timetable.LoginViewController.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Shared_Timetable.LoginViewController&gt;"
+                  moduleName = "Shared Timetable"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DaniilKudryavtsev/Documents/GitHub/sharedCalendar/Shared%20Timetable/Login.swift"
+                  timestampString = "541171298.261943"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "340">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

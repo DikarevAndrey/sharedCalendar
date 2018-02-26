@@ -31,7 +31,7 @@
                                 <rect key="frame" x="50" y="248" width="275" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet" smartQuotesType="no"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lzA-1P-GCJ">
                                 <rect key="frame" x="50" y="308" width="275" height="30"/>
@@ -72,16 +72,9 @@
                             <constraint firstItem="zIe-jG-WCq" firstAttribute="top" secondItem="hx8-M8-hDq" secondAttribute="bottom" constant="72" id="lf6-Yl-58g"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="K1X-Sa-ZGg">
-                        <barButtonItem key="rightBarButtonItem" title="Log in" id="dfM-1j-HSL">
-                            <connections>
-                                <action selector="loginAction:" destination="NmM-AB-MTH" id="8wS-Bm-BRM"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="K1X-Sa-ZGg"/>
                     <connections>
                         <outlet property="labelConstraint" destination="lf6-Yl-58g" id="mzd-0d-EAT"/>
-                        <outlet property="logInBarButtonItem" destination="dfM-1j-HSL" id="arh-ZY-OLo"/>
                         <outlet property="loginConstraint" destination="7WY-mV-FBe" id="g9I-3q-qqS"/>
                         <outlet property="loginTextField" destination="mhr-mm-gW8" id="yQG-B2-Dlo"/>
                         <outlet property="passwordConstraint" destination="P0A-1E-PMe" id="3mI-4Y-eGh"/>
@@ -94,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L9t-W7-Nub" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3373.5999999999999" y="928.78560719640188"/>
+            <point key="canvasLocation" x="3712.8000000000002" y="928.78560719640188"/>
         </scene>
         <!--First Step Registration View Controller-->
         <scene sceneID="6Gn-kn-Ttu">
@@ -151,17 +144,9 @@
                             <constraint firstAttribute="trailing" secondItem="1DN-ol-5cc" secondAttribute="trailing" constant="50" id="rOo-yy-w6T"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="FvP-aZ-w1e">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="wbl-Hm-5JX">
-                            <connections>
-                                <action selector="nextAction:" destination="OUk-DN-Kxu" id="6ew-bp-bQU"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="nameConstraint" destination="eya-tM-Q2r" id="L23-wd-WOI"/>
                         <outlet property="nameTextField" destination="eWM-hX-bV8" id="coh-N8-OCd"/>
-                        <outlet property="nextBarButtonItem" destination="wbl-Hm-5JX" id="rYb-rs-btF"/>
                         <outlet property="patronymicConstraint" destination="M7T-di-a0v" id="z4y-OJ-1Ae"/>
                         <outlet property="patronymicTextField" destination="fED-Xx-WxZ" id="I9S-I1-G0p"/>
                         <outlet property="surnameConstraint" destination="jYS-jo-bad" id="7o3-Ll-mbF"/>
@@ -173,7 +158,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9o5-tG-VWp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4280.8000000000002" y="928.78560719640188"/>
+            <point key="canvasLocation" x="4620" y="928.78560719640188"/>
         </scene>
         <!--Last Step Registration View Controller-->
         <scene sceneID="Cem-Lv-nof">
@@ -230,13 +215,6 @@
                             <constraint firstItem="UlJ-MF-XVu" firstAttribute="leading" secondItem="iue-T3-yWM" secondAttribute="leading" constant="50" id="zCH-5d-cIx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bO0-KK-Bm8">
-                        <barButtonItem key="rightBarButtonItem" title="Register" id="tOp-NG-yFy">
-                            <connections>
-                                <action selector="registerAction:" destination="gTQ-uq-zMP" id="Tr6-x8-Ilm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="loginConstraint" destination="YF3-SU-yTj" id="1cg-oB-URi"/>
                         <outlet property="loginTextField" destination="KBn-vK-x69" id="ahD-EV-eyo"/>
@@ -244,14 +222,13 @@
                         <outlet property="passwordConfirmationTextField" destination="FOS-Fe-9ok" id="g1w-iT-gbw"/>
                         <outlet property="passwordConstraint" destination="juX-3z-hFm" id="5EF-xl-mmU"/>
                         <outlet property="passwordTextField" destination="UlJ-MF-XVu" id="1Is-4W-0CI"/>
-                        <outlet property="registerBarButtonItem" destination="tOp-NG-yFy" id="1gq-v2-2Qb"/>
                         <outlet property="warningConstraint" destination="EEl-gN-6k3" id="deA-JY-YHa"/>
                         <outlet property="warningLabel" destination="9ra-uB-COA" id="rsB-ai-qqa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adC-lJ-WCF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5154" y="929"/>
+            <point key="canvasLocation" x="5492" y="928.78560719640188"/>
         </scene>
         <!--Groups-->
         <scene sceneID="tne-QT-ifu">
@@ -324,18 +301,34 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="YXa-md-wSK" id="OA8-mG-0XY"/>
-                        <segue destination="NQa-fD-0LF" kind="presentation" identifier="authorization" id="ORK-GV-oqW"/>
-                        <segue destination="S2F-8P-JHG" kind="show" identifier="newGroup" id="cZS-0e-Cs6"/>
+                        <segue destination="gDc-Na-rae" kind="presentation" identifier="authorization" id="hMg-Up-sZo"/>
+                        <segue destination="f1U-Es-q1K" kind="presentation" identifier="newGroup" id="3cw-jh-8gM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2516" y="132.68365817091455"/>
         </scene>
-        <!--New Group-->
+        <!--Navigation Controller-->
+        <scene sceneID="es5-I1-bQP">
+            <objects>
+                <navigationController id="f1U-Es-q1K" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EjL-L0-gcv">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="S2F-8P-JHG" kind="relationship" relationship="rootViewController" id="3tw-Ea-pBM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lHj-XK-oUo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3713" y="133"/>
+        </scene>
+        <!--Members-->
         <scene sceneID="zad-i1-kSD">
             <objects>
-                <viewController title="New Group" id="S2F-8P-JHG" customClass="NewGroupViewController" customModule="Shared_Timetable" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Members" id="S2F-8P-JHG" customClass="MembersViewController" customModule="Shared_Timetable" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dnh-yT-ELn"/>
                         <viewControllerLayoutGuide type="bottom" id="j4F-5o-UQU"/>
@@ -388,13 +381,46 @@
                             <constraint firstItem="HVz-Uz-Nes" firstAttribute="top" secondItem="6CA-mQ-4CW" secondAttribute="top" id="hT2-MK-rmk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Members" id="fix-3I-9n4">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="BEl-0r-ra7">
+                            <connections>
+                                <action selector="cancelAction:" destination="S2F-8P-JHG" id="U4U-9S-2fx"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="Ddb-Jn-wXs">
+                            <connections>
+                                <action selector="nextAction:" destination="S2F-8P-JHG" id="4ed-1b-cLw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelBarButtonItem" destination="BEl-0r-ra7" id="Ktz-4t-HDv"/>
+                        <outlet property="nextBarButtonItem" destination="Ddb-Jn-wXs" id="sUC-6Z-WOv"/>
                         <outlet property="tableView" destination="HVz-Uz-Nes" id="TGu-gQ-qmb"/>
+                        <segue destination="QfH-6Y-dhM" kind="show" identifier="newGroupNext" id="niK-LW-GeU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sTu-W5-7lN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3373.5999999999999" y="132.68365817091455"/>
+            <point key="canvasLocation" x="4620" y="133"/>
+        </scene>
+        <!--New Group-->
+        <scene sceneID="09i-Db-gHQ">
+            <objects>
+                <viewController title="New Group" id="QfH-6Y-dhM" customClass="GroupCreatingViewContorller" customModule="Shared_Timetable" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qBS-qY-voo"/>
+                        <viewControllerLayoutGuide type="bottom" id="pXP-8T-s54"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CLQ-i2-XLl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Nb-tj-VA6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5492" y="132.68365817091455"/>
         </scene>
         <!--Event Adding View Controller-->
         <scene sceneID="V8o-TB-G8o">
@@ -412,7 +438,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ov0-gs-aua" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5153" y="133"/>
+            <point key="canvasLocation" x="6550" y="133"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0rf-uU-wGN">
@@ -433,20 +459,20 @@
             <point key="canvasLocation" x="2516" y="-613"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="ED6-A8-NK4">
+        <scene sceneID="5Hf-p2-8Sm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NQa-fD-0LF" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gDc-Na-rae" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0cf-cV-8yA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ybJ-KB-8tp">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="NmM-AB-MTH" kind="relationship" relationship="rootViewController" id="qFT-in-RAx"/>
+                        <segue destination="NmM-AB-MTH" kind="relationship" relationship="rootViewController" id="uKX-0x-F8p"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HbV-Do-bmc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YHL-Eb-vqM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2516" y="929"/>
         </scene>

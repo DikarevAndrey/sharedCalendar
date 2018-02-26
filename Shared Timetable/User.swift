@@ -12,4 +12,5 @@ import CalendarKit
 
 class User {
     public var relogin = true
+    public var groups = [Group]()
 }

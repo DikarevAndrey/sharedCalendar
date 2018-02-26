@@ -11,8 +11,13 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
+    let logInBarButtonItem = UIBarButtonItem(
+        title: "Log in",
+        style: .plain,
+        target: self,
+        action: #selector(loginAction)
+    )
     
-    @IBOutlet weak var logInBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var loginTextField: UITextField!
@@ -31,6 +36,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginConstraint.constant = screenHeight/20
         passwordConstraint.constant = screenHeight/20
         registerConstraint.constant = screenHeight/5
+        
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationItem.rightBarButtonItem = logInBarButtonItem
         
         logInBarButtonItem.isEnabled = false
         loginTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -60,14 +69,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if !asciiCapable(s: login) || !asciiCapable(s: password) || !asciiCapable(s: password) {
             warningLabel.text = "Only latin symbols, ., -, _ are expected"
             warningLabel.textColor = UIColor.white
-            logInBarButtonItem.isEnabled = false
             return
         }
         if login.isEmpty || password.isEmpty || !asciiCapable(s: login) || !asciiCapable(s: password) {
-            logInBarButtonItem.isEnabled = false
+            self.logInBarButtonItem.isEnabled = false
             return
         }
-        logInBarButtonItem.isEnabled = true
+        self.logInBarButtonItem.isEnabled = true
     }
     
     func asciiCapable(s: String) -> Bool {
@@ -81,7 +89,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
 
-    @IBAction func loginAction(_ sender: Any) {
+    func loginAction() {
         let login = loginTextField.text!
         let password = passwordTextField.text!
         let postString = "login=\(login)&password=\(password)"
@@ -116,7 +124,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     print("unknown status code")
                 }
             }
-        }.resume()
+            }.resume()
     }
     
     @IBAction func registerAction(_ sender: Any) {

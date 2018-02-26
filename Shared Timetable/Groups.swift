@@ -26,6 +26,7 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         if user.relogin {
+            print("relogin: true")
             getData()
         }
     }
@@ -154,6 +155,9 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //tableView.cellForRow(at: indexPath)?.prepareForReuse()
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         //переход к календарю
         let controller = EventsViewController()
         show(controller, sender: nil)

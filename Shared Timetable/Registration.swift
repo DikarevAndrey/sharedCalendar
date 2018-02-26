@@ -8,14 +8,18 @@
 
 import UIKit
 
-var name: String = ""
-var surname: String = ""
-var patronymic: String = ""
+var name = String()
+var surname = String()
+var patronymic = String()
 
 class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var nextBarButtonItem: UIBarButtonItem!
-    
+    let nextBarButtonItem = UIBarButtonItem(
+        title: "Next",
+        style: .plain,
+        target: self,
+        action: #selector(nextAction)
+    )
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var surnameTextField: UITextField!
     @IBOutlet weak var patronymicTextField: UITextField!
@@ -33,6 +37,7 @@ class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate
         surnameConstraint.constant = screenHeight/23
         patronymicConstraint.constant = screenHeight/23
         
+        navigationItem.rightBarButtonItem = nextBarButtonItem
         nextBarButtonItem.isEnabled = false
         nameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         surnameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -41,6 +46,14 @@ class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate
         self.nameTextField.delegate = self
         self.surnameTextField.delegate = self
         self.patronymicTextField.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        nextBarButtonItem.isEnabled = false
+        if !nameTextField.text!.isEmpty && !surnameTextField.text!.isEmpty {
+            nextBarButtonItem.isEnabled = true
+        }
+        print(nameTextField.text!)
     }
     
     //Hides keyboard while tapping outside the text field
@@ -61,27 +74,28 @@ class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate
             let name = nameTextField.text, !name.isEmpty,
             let surname = surnameTextField.text, !surname.isEmpty
         else {
-                self.nextBarButtonItem.isEnabled = false
-                return
+            self.nextBarButtonItem.isEnabled = false
+            return
         }
         nextBarButtonItem.isEnabled = true
     }
-    
-    @IBAction func nextAction(_ sender: Any) {
+    func nextAction() {
         warningLabel.text = ""
-        name = nameTextField.text!
-        surname = surnameTextField.text!
-        patronymic = patronymicTextField.text!
+        name = nameTextField.text ?? ""
+        surname = surnameTextField.text ?? ""
+        patronymic = patronymicTextField.text ?? ""
         performSegue(withIdentifier: "next", sender: nil)
     }
-    
 }
 
 class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate {
     
-    
-    @IBOutlet weak var registerBarButtonItem: UIBarButtonItem!
-    
+    let registerBarButtonItem = UIBarButtonItem(
+        title: "Register",
+        style: .plain,
+        target: self,
+        action: #selector(registerAction)
+    )
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -98,6 +112,7 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
         loginConstraint.constant = screenHeight/30
         passwordConstraint.constant = screenHeight/23
         passwordConfirmationConstraint.constant = screenHeight/23
+        navigationItem.rightBarButtonItem = registerBarButtonItem
         
         registerBarButtonItem.isEnabled = false
         loginTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -136,9 +151,9 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
     }
     
     func editingChanged(_ textField: UITextField) {
-        let login = loginTextField.text!
-        let password = passwordTextField.text!
-        let passwordConfirmation = passwordConfirmationTextField.text!
+        let login = loginTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        let passwordConfirmation = passwordConfirmationTextField.text ?? ""
         warningLabel.text = ""
         if !asciiCapable(s: login) || !asciiCapable(s: password) || !asciiCapable(s: passwordConfirmation) {
             warningLabel.text = "Only latin symbols, ., -, _ are expected"
@@ -154,9 +169,9 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
     }
     
     func passwordsMatch(_ textField: UITextField) {
-        let login = loginTextField.text!
-        let password = passwordTextField.text!
-        let passwordConfirmation = passwordConfirmationTextField.text!
+        let login = loginTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        let passwordConfirmation = passwordConfirmationTextField.text ?? ""
         warningLabel.text = ""
         if !asciiCapable(s: login) || !asciiCapable(s: password) || !asciiCapable(s: passwordConfirmation) {
             warningLabel.text = "Only latin symbols, ., -, _ are expected"
@@ -177,12 +192,11 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
         if login.isEmpty {
             registerBarButtonItem.isEnabled = false
         }
-        registerBarButtonItem.isEnabled = false
+        registerBarButtonItem.isEnabled = true
     }
-    
-    @IBAction func registerAction(_ sender: Any) {
-        let login = loginTextField.text!
-        let password = passwordTextField.text!
+    func registerAction() {
+        let login = loginTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
         let myUrl = "http://188.166.110.14/signup?"
         let request = NSMutableURLRequest(url: URL(string: myUrl)!)
         request.httpMethod = "POST"
