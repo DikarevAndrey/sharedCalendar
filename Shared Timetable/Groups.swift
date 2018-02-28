@@ -160,6 +160,7 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
         
         //переход к календарю
         let controller = EventsViewController()
+        controller.navigationItem.title = groups[indexPath.row].name
         show(controller, sender: nil)
         //performSegue(withIdentifier: "open", sender: nil)
     }

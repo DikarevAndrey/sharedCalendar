@@ -29,6 +29,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
+        searchBar.autocapitalizationType = .none
         tableView.tableHeaderView = searchBar
         searchBar.delegate = self
         searchBar.keyboardType = UIKeyboardType.asciiCapable
@@ -40,6 +41,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
         if members.count > 0 {
             nextBarButtonItem.isEnabled = true
         }
+        print(members.count)
     }
     
     //Hides keyboard when "search" button pressed
@@ -97,7 +99,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
                                 }
                             }
                             DispatchQueue.main.async {
-                                print(self.amountOfUsers!)
+                                //print(self.amountOfUsers!)
                                 self.users = usersCopy
                             }
                         }
@@ -120,6 +122,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     @IBAction func cancelAction(_ sender: Any) {
+        members = [String]()
         dismiss(animated: true, completion: nil)
     }
     
@@ -131,8 +134,13 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newGroupCell") as! NewGroupCell //cell - ячейка таблицы
-        cell.cellLabel.text = users[indexPath.row]
-        cell.accessoryType = .none
+        let user = users[indexPath.row]
+        cell.cellLabel.text = user
+        if members.contains(user) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         return cell
     }
     //возвращает количество ячеек
@@ -153,10 +161,11 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+        let user = users[indexPath.row]
+        if members.contains(user) {
             var copyMembers = [String]()
             for m in members {
-                if m != users[indexPath.row] {
+                if m != user {
                     copyMembers.append(m)
                 }
             }
@@ -164,7 +173,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         }
         else {
-            members.append(users[indexPath.row])
+            members.append(user)
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
         if members.count > 0 {

@@ -14,7 +14,8 @@ class EventsViewController: DayViewController {
     
 
     override func viewDidLoad() {
-        self.navigationItem.title = "*название группы*" //сделать список участников по клику
+        self.view.backgroundColor = UIColor.white
+        //self.navigationItem.title = "*название группы*" //сделать список участников по клику
         let addButton = UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,
