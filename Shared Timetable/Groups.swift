@@ -123,12 +123,19 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     
     //Logging out
     @IBAction func quitAction(_ sender: Any) {
-        let defaults = UserDefaults.standard
-        defaults.setValue("", forKey: "login")
-        defaults.setValue("", forKey: "password")
-        defaults.synchronize()
-        user.relogin = true
-        performSegue(withIdentifier: "authorization", sender: nil)
+        let alertController = UIAlertController(title: "Are you sure you want to quit?", message: nil, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Quit", style: .destructive) { (_) in
+            let defaults = UserDefaults.standard
+            defaults.setValue("", forKey: "login")
+            defaults.setValue("", forKey: "password")
+            defaults.synchronize()
+            user.relogin = true
+            self.performSegue(withIdentifier: "authorization", sender: nil)
+        }
+        alertController.addAction(yesAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //создание новой ячейки
