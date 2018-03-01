@@ -12,7 +12,6 @@
 		0025C4282034B4BA005CD689 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025C4272034B4BA005CD689 /* User.swift */; };
 		0049FAB22039AB99001FA2E1 /* NewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049FAB12039AB99001FA2E1 /* NewGroup.swift */; };
 		0058E72C201E253A00E5678D /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0058E72B201E253A00E5678D /* Login.swift */; };
-		00792F032046E920009790AA /* ChoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00792F022046E920009790AA /* ChoiceController.swift */; };
 		00A12116201B73D200E07CFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12115201B73D200E07CFE /* AppDelegate.swift */; };
 		00A12118201B73D200E07CFE /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12117201B73D200E07CFE /* Groups.swift */; };
 		00A1211B201B73D200E07CFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00A12119201B73D200E07CFE /* Main.storyboard */; };
@@ -21,6 +20,8 @@
 		00A1212B201B73D200E07CFE /* Shared_TimetableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A1212A201B73D200E07CFE /* Shared_TimetableTests.swift */; };
 		00A12136201B73D200E07CFE /* Shared_TimetableUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12135201B73D200E07CFE /* Shared_TimetableUITests.swift */; };
 		00B987E4201FB4210008F27D /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B987E3201FB4210008F27D /* Registration.swift */; };
+		00F88A192047225200300B21 /* ChoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F88A182047225200300B21 /* ChoiceController.swift */; };
+		00F88A1B2047F3CD00300B21 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F88A1A2047F3CD00300B21 /* Favorites.swift */; };
 		1649601B2B53460540DD5CF7 /* Pods_Shared_Timetable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6AFB178A2A1C2AFD276B078 /* Pods_Shared_Timetable.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +48,6 @@
 		0025C4272034B4BA005CD689 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0049FAB12039AB99001FA2E1 /* NewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroup.swift; sourceTree = "<group>"; };
 		0058E72B201E253A00E5678D /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		00792F022046E920009790AA /* ChoiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceController.swift; sourceTree = "<group>"; };
 		00A12112201B73D200E07CFE /* Shared Timetable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shared Timetable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A12115201B73D200E07CFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00A12117201B73D200E07CFE /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
@@ -62,6 +62,8 @@
 		00A12135201B73D200E07CFE /* Shared_TimetableUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared_TimetableUITests.swift; sourceTree = "<group>"; };
 		00A12137201B73D200E07CFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00B987E3201FB4210008F27D /* Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
+		00F88A182047225200300B21 /* ChoiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceController.swift; sourceTree = "<group>"; };
+		00F88A1A2047F3CD00300B21 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		1A2A1641C0A10A88997128A7 /* Pods-Shared Timetable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared Timetable.release.xcconfig"; path = "Pods/Target Support Files/Pods-Shared Timetable/Pods-Shared Timetable.release.xcconfig"; sourceTree = "<group>"; };
 		70041522FA13A86A70E05D89 /* Pods_Shared_TimetableUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_TimetableUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5854A6B3595FBF3D7DCD281 /* Pods_Shared_TimetableTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared_TimetableTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,7 +127,8 @@
 				0049FAB12039AB99001FA2E1 /* NewGroup.swift */,
 				0058E72B201E253A00E5678D /* Login.swift */,
 				00A12119201B73D200E07CFE /* Main.storyboard */,
-				00792F022046E920009790AA /* ChoiceController.swift */,
+				00F88A1A2047F3CD00300B21 /* Favorites.swift */,
+				00F88A182047225200300B21 /* ChoiceController.swift */,
 				002159DA202A2F17008E227C /* EventsViewController.swift */,
 				002159D82029D1A8008E227C /* EventAddingViewController.swift */,
 				00B987E3201FB4210008F27D /* Registration.swift */,
@@ -376,10 +379,11 @@
 				0049FAB22039AB99001FA2E1 /* NewGroup.swift in Sources */,
 				00B987E4201FB4210008F27D /* Registration.swift in Sources */,
 				0058E72C201E253A00E5678D /* Login.swift in Sources */,
-				00792F032046E920009790AA /* ChoiceController.swift in Sources */,
+				00F88A1B2047F3CD00300B21 /* Favorites.swift in Sources */,
 				00A12118201B73D200E07CFE /* Groups.swift in Sources */,
 				00A12116201B73D200E07CFE /* AppDelegate.swift in Sources */,
 				002159D92029D1A8008E227C /* EventAddingViewController.swift in Sources */,
+				00F88A192047225200300B21 /* ChoiceController.swift in Sources */,
 				002159DB202A2F17008E227C /* EventsViewController.swift in Sources */,
 				0025C4282034B4BA005CD689 /* User.swift in Sources */,
 			);

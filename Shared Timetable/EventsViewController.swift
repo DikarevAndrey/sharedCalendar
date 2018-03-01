@@ -3,7 +3,7 @@
 //  Shared Timetable
 //
 //  Created by Даниил Пес Кудрявцев on 06/02/2018.
-//  Copyright © 2018 Даниил Пес Кудрявцев. All rights reserved.
+//  Copyright © 2018 Даниил Кудрявцев. All rights reserved.
 //
 
 import UIKit
@@ -15,7 +15,6 @@ class EventsViewController: DayViewController {
 
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.white
-        //self.navigationItem.title = "*название группы*" //сделать список участников по клику
         let addButton = UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,

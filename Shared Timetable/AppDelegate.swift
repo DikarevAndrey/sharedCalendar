@@ -3,7 +3,7 @@
 //  Shared Timetable
 //
 //  Created by Даниил Пес Кудрявцев on 26/01/2018.
-//  Copyright © 2018 Даниил Пес Кудрявцев. All rights reserved.
+//  Copyright © 2018 Даниил Кудрявцев. All rights reserved.
 //
 
 import UIKit

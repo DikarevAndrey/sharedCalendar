@@ -133,7 +133,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "newGroupCell") as! NewGroupCell //cell - ячейка таблицы
+        let cell = tableView.dequeueReusableCell(withIdentifier: "newMemberCell") as! NewMemberCell //cell - ячейка таблицы
         let user = users[indexPath.row]
         cell.cellLabel.text = user
         if members.contains(user) {
@@ -185,7 +185,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 }
 
-class NewGroupCell: UITableViewCell {
+class NewMemberCell: UITableViewCell {
     @IBOutlet weak var cellLabel: UILabel!
 }
 

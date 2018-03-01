@@ -3,7 +3,7 @@
 //  Shared Timetable
 //
 //  Created by Даниил Пес Кудрявцев on 26/01/2018.
-//  Copyright © 2018 Даниил Пес Кудрявцев. All rights reserved.
+//  Copyright © 2018 Даниил Кудрявцев. All rights reserved.
 //
 
 import UIKit
@@ -138,6 +138,13 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
         self.present(alertController, animated: true, completion: nil)
     }
     
+    
+    func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+        if item.title == "Groups" {
+            print("kek")
+        }
+    }
+    
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell") as! GroupsCell //cell - ячейка таблицы
@@ -167,6 +174,7 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
         
         //переход к календарю
         let controller = EventsViewController()
+        controller.hidesBottomBarWhenPushed = true
         controller.navigationItem.title = groups[indexPath.row].name
         show(controller, sender: nil)
         //performSegue(withIdentifier: "open", sender: nil)
