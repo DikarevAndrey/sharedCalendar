@@ -41,7 +41,6 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
         if members.count > 0 {
             nextBarButtonItem.isEnabled = true
         }
-        print(members.count)
     }
     
     //Hides keyboard when "search" button pressed
@@ -157,7 +156,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     //отвечает за заголовок таблицы
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ""
+        return "Users found:"
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -189,13 +188,86 @@ class NewMemberCell: UITableViewCell {
     @IBOutlet weak var cellLabel: UILabel!
 }
 
-class GroupCreatingViewController: UIViewController {
+class GroupCreatingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var groupNameStripLabel: UILabel!
+    let createBarButtonItem = UIBarButtonItem(
+        title: "Create",
+        style: .done,
+        target: self,
+        action: #selector(createAction)
+    )
     
+    @IBOutlet weak var groupNameTextFieldConstraint: NSLayoutConstraint!
+    @IBOutlet weak var groupNameTextField: UITextField!
+    @IBOutlet weak var stripLabelConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stripLabel: UILabel!
+    @IBOutlet weak var membersTableViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var membersTableView: UITableView!
     override func viewDidLoad() {
+        stripLabel.backgroundColor = UIColor.lightGray
+        let screenHeight = view.frame.height
+        groupNameTextFieldConstraint.constant = screenHeight/5
+        stripLabelConstraint.constant = screenHeight/100
+        membersTableViewConstraint.constant = screenHeight/15
+        
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationItem.rightBarButtonItem = createBarButtonItem
+        createBarButtonItem.tintColor = UIColor.green
+        createBarButtonItem.isEnabled = false
+        groupNameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        groupNameTextField.delegate = self
         super.viewDidLoad()
-        groupNameStripLabel.backgroundColor = UIColor.gray
     }
     
+    //Hides keyboard while tapping outside the text field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    //Hides keyboard when "return" button pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return (true)
+    }
+    
+    func editingChanged(_ textField: UITextField) {
+        createBarButtonItem.isEnabled = false
+        if !(groupNameTextField.text ?? "").isEmpty {
+            createBarButtonItem.isEnabled = true
+        }
+    }
+    func createAction() {
+        print("kek")
+    }
+    
+    //создание новой ячейки
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "memberCell") as! MemberCell //cell - ячейка таблицы
+        cell.label.text = members[indexPath.row]
+        return cell
+    }
+    //возвращает количество ячеек
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return members.count
+    }
+    //возвращает количество секций, то есть 1
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    //отвечает за заголовок таблицы
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Members"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+class MemberCell: UITableViewCell {
+    
+    @IBOutlet weak var label: UILabel!
 }

@@ -6,8 +6,15 @@
 	<dict>
 		<key>CalendarKit 10.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>13</integer>
+		</dict>
+		<key>CalendarKit 12.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>CalendarKit 2.xcscheme</key>
 		<dict>
