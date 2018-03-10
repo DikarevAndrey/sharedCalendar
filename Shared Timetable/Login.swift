@@ -13,7 +13,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let logInBarButtonItem = UIBarButtonItem(
         title: "Log in",
-        style: .plain,
+        style: .done,
         target: self,
         action: #selector(loginAction)
     )

@@ -12,5 +12,8 @@ import CalendarKit
 
 class User {
     public var relogin = true
+    public var updateFavorites = true
     public var groups = [Group]()
+    public var favorites = [String]()
+    public var unconfirmed = [String]()
 }

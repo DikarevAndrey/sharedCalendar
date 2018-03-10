@@ -17,25 +17,56 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
     }
     
-    
-    @IBAction func unconfirmedAction(_ sender: Any) {
-        performSegue(withIdentifier: "unconfirmed", sender: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        if user.updateFavorites {
+            getFavorites()
+        }
     }
     
-    @IBAction func newFavoriteAction(_ sender: Any) {
-        performSegue(withIdentifier: "newFavorite", sender: nil)
+    func getFavorites() {
+        //Receiving user groups information from server
+        let admin = UserDefaults.standard.value(forKey: "login") as? String ?? ""
+        let postString = "login=\(admin)"
+        let myURL = URL(string: "http://188.166.110.14/favs?\(postString)")!
+        URLSession.shared.dataTask(with: myURL) { (data, response, error) -> Void in
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            do {
+                if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                    let amount = jsonObject["amount"] as? Int
+                    //Main thread implementation
+                    var favoriteUsers = [String]()
+                    if amount! > 0 {
+                        //Main thread implementation
+                        favoriteUsers = jsonObject["favs"] as! [String]
+                    }
+                    DispatchQueue.main.async {
+                        user.favorites = favoriteUsers
+                        self.tableView.reloadData()
+                        user.updateFavorites = false
+                    }
+                } else {
+                    print("JSON failed")
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            }.resume()
     }
     
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "favoritesCell") as! FavoritesCell //cell - ячейка таблицы
-        cell.cellLabel.text = "kekekekek"
+        cell.cellLabel.text = user.favorites[indexPath.row]
         return cell
     }
     
     //возвращает количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return user.favorites.count
     }
     //возвращает количество секций, то есть 1
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,7 +79,15 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    @IBAction func unconfirmedAction(_ sender: Any) {
+        performSegue(withIdentifier: "unconfirmed", sender: nil)
+    }
+    
+    @IBAction func newFavoriteAction(_ sender: Any) {
+        performSegue(withIdentifier: "newFavorite", sender: nil)
     }
 }
 
@@ -61,26 +100,109 @@ class FavoritesCell: UITableViewCell {
 class UnconfirmedViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var confirmBarButtonItem: UIBarButtonItem!
     
+    var usersToConfirm = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    
-    @IBAction func doneAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        confirmBarButtonItem.title = "Confirm"
+        confirmBarButtonItem.isEnabled = false
+        getUnconfirmed()
     }
+    
+    
+    func getUnconfirmed() {
+        let admin = UserDefaults.standard.value(forKey: "login") as? String ?? ""
+        let postString = "login=\(admin)"
+        let myURL = URL(string: "http://188.166.110.14/unconfirmed_favs?\(postString)")!
+        print("getting unconfirmed " + postString)
+        URLSession.shared.dataTask(with: myURL) { (data, response, error) -> Void in
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            do {
+                if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                    let amount = jsonObject["amount"] as? Int
+                    //Main thread implementation
+                    var unconfirmedUsers = [String]()
+                    if amount! > 0 {
+                        unconfirmedUsers = jsonObject["users"] as! [String]
+                    }
+                    DispatchQueue.main.async {
+                        user.unconfirmed = unconfirmedUsers
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    print("JSON failed")
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            }.resume()
+    }
+    
+    @IBAction func confirmAction(_ sender: Any) {
+        user.updateFavorites = true
+        let admin = UserDefaults.standard.value(forKey: "login") as? String ?? ""
+        let myUrl = URL(string: "http://188.166.110.14/confirm_fav?")!
+        for u in usersToConfirm {
+            let postString = "to=\(admin)&from=\(u)"
+            print(postString)
+            var request = URLRequest(url: myUrl)
+            request.httpMethod = "POST"
+            request.httpBody = postString.data(using: .utf8)
+            URLSession.shared.dataTask(with: request) { (_, response, error) -> Void in
+                DispatchQueue.main.async {
+                    guard let response = response as? HTTPURLResponse else {
+                        // Error handle
+                        print("No internet connection")
+                        return
+                    }
+                    let status = response.statusCode
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    //print("response status: \(status)")
+                    switch status {
+                    case 200:
+                        print("Users confirmation: OK")
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    case 405:
+                        print("Users confirmation: No such request received")
+                    case 500:
+                        print("Users confirmation: chosen users not confirmed")
+                    default:
+                        print("unknown status code")
+                    }
+                    //print("responseString = \(responseString)")
+                }
+                }.resume()
+        }
+    }
+    
     
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "unconfirmedCell") as! UnconfirmedCell //cell - ячейка таблицы
-        cell.cellLabel.text = "kekekekek"
+        cell.cellLabel.text = user.unconfirmed[indexPath.row]
+        if usersToConfirm.contains(user.unconfirmed[indexPath.row]) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         return cell
     }
     
     //возвращает количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return user.unconfirmed.count
     }
     //возвращает количество секций, то есть 1
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -93,7 +215,37 @@ class UnconfirmedViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if usersToConfirm.contains(user.unconfirmed[indexPath.row]) {
+            var copyUsersToConfirm = [String]()
+            for u in usersToConfirm {
+                if u != user.unconfirmed[indexPath.row] {
+                    copyUsersToConfirm.append(u)
+                }
+            }
+            usersToConfirm = copyUsersToConfirm
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
+        else {
+            usersToConfirm.append(user.unconfirmed[indexPath.row])
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+        if usersToConfirm.count > 0 {
+            confirmBarButtonItem.isEnabled = true
+            if usersToConfirm.count == 1 {
+                confirmBarButtonItem.title = "Confirm " + String(usersToConfirm.count) + " user"
+            }
+            else {
+                confirmBarButtonItem.title = "Confirm " + String(usersToConfirm.count) + " users"
+            }
+        } else {
+            confirmBarButtonItem.title = "Confirm"
+            confirmBarButtonItem.isEnabled = false
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    @IBAction func doneAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -107,13 +259,14 @@ class NewFavoriteViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addBarButtonItem: UIBarButtonItem!
     
-    let addBarButtonItem = UIBarButtonItem(
+    /*let addBarButtonItem = UIBarButtonItem(
         title: "Add",
         style: .done,
         target: self,
         action: #selector(addAction)
-    )
+    )*/
     var usersToAdd = [String]()
     var amountOfUsers: Int?
     var users = [String]()
@@ -132,8 +285,8 @@ class NewFavoriteViewController: UIViewController, UITableViewDataSource, UITabl
         
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationItem.rightBarButtonItem = addBarButtonItem
-        addBarButtonItem.isEnabled = false
+        //navigationItem.rightBarButtonItem = addBarButtonItem
+        //addBarButtonItem.isEnabled = false
         
         super.viewDidLoad()
     }
@@ -147,9 +300,11 @@ class NewFavoriteViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    func addAction() {
-        print("kek")
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
+    
     
     //Hides keyboard when "search" button pressed
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -227,6 +382,48 @@ class NewFavoriteViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    @IBAction func addAction(_ sender: Any) {
+        let admin = UserDefaults.standard.value(forKey: "login") as? String ?? ""
+        let myUrl = URL(string: "http://188.166.110.14/new_favs?")!
+        var postString = ""
+        for u in usersToAdd {
+            postString += "favs[]=\(u)&"
+        }
+        postString += "from=\(admin)"
+        print(postString)
+        var request = URLRequest(url: myUrl)
+        request.httpMethod = "POST"
+        request.httpBody = postString.data(using: .utf8)
+        URLSession.shared.dataTask(with: request) { (_, response, error) -> Void in
+            DispatchQueue.main.async {
+                guard let response = response as? HTTPURLResponse else {
+                    // Error handle
+                    print("No internet connection")
+                    return
+                }
+                let status = response.statusCode
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                //print("response status: \(status)")
+                switch status {
+                case 200:
+                    print("Users adding: OK")
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                case 405:
+                    print("Users adding: Already waiting for confirmation")
+                case 500:
+                    print("Users adding: chosen users not added")
+                default:
+                    print("unknown status code")
+                }
+                //print("responseString = \(responseString)")
+            }
+            }.resume()
+    }
+    
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newFavoriteCell") as! NewFavoriteCell //cell - ячейка таблицы
@@ -287,6 +484,8 @@ class NewFavoriteViewController: UIViewController, UITableViewDataSource, UITabl
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
 }
 
 class NewFavoriteCell: UITableViewCell {

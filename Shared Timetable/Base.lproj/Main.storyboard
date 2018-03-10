@@ -305,13 +305,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Unconfirmed" id="uHG-OC-VdF">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="7WP-CQ-PzA">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="7WP-CQ-PzA">
                             <connections>
                                 <action selector="doneAction:" destination="Cfq-Ci-8Mk" id="LIX-bF-Ock"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Confrim" id="y47-hO-j7M">
+                            <connections>
+                                <action selector="confirmAction:" destination="Cfq-Ci-8Mk" id="tba-hK-vWt"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="confirmBarButtonItem" destination="y47-hO-j7M" id="dwP-0Q-yZy"/>
                         <outlet property="tableView" destination="NgD-fu-6Md" id="Vi0-f2-SsE"/>
                     </connections>
                 </viewController>
@@ -405,13 +411,29 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="3kq-V3-rZF" id="MXQ-pG-TXD"/>
-                        <segue destination="lc8-9f-4Qa" kind="show" identifier="newFavorite" id="Udz-M7-mMW"/>
                         <segue destination="MoY-nq-6go" kind="presentation" identifier="unconfirmed" id="Kid-hJ-XBV"/>
+                        <segue destination="POI-u5-3qK" kind="presentation" identifier="newFavorite" id="214-hD-LHo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RWG-mH-bgv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1544.8" y="1684.4077961019491"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="t99-xg-Nzu">
+            <objects>
+                <navigationController id="POI-u5-3qK" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pWD-eI-Lew">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lc8-9f-4Qa" kind="relationship" relationship="rootViewController" id="qmb-DL-yBW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VWp-XB-K8H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2516" y="1684"/>
         </scene>
         <!--New Favorite View Controller-->
         <scene sceneID="tTy-Bg-WgM">
@@ -469,13 +491,26 @@
                             <constraint firstItem="eGZ-C1-SgM" firstAttribute="top" secondItem="J53-sP-s0N" secondAttribute="top" id="I1b-Jz-slD"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="izo-wX-ZNa">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Vzx-Wd-AjK">
+                            <connections>
+                                <action selector="cancelAction:" destination="lc8-9f-4Qa" id="jIn-XG-s6t"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" style="done" id="0P6-uN-xzn">
+                            <connections>
+                                <action selector="addAction:" destination="lc8-9f-4Qa" id="VZM-5x-2CU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addBarButtonItem" destination="0P6-uN-xzn" id="Uzi-2K-fGu"/>
                         <outlet property="tableView" destination="eGZ-C1-SgM" id="CWK-JY-miD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VbG-GZ-cQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2516" y="1683.5082458770617"/>
+            <point key="canvasLocation" x="3433" y="1684"/>
         </scene>
         <!--Item-->
         <scene sceneID="jJL-TR-HD9">
@@ -506,7 +541,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YXa-md-wSK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXa-md-wSK">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -654,7 +689,7 @@
                                 <action selector="cancelAction:" destination="S2F-8P-JHG" id="U4U-9S-2fx"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="Ddb-Jn-wXs">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Next" id="Ddb-Jn-wXs">
                             <connections>
                                 <action selector="nextAction:" destination="S2F-8P-JHG" id="4ed-1b-cLw"/>
                             </connections>
@@ -690,7 +725,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xz4-pP-RWW">
-                                <rect key="frame" x="50" y="226" width="275" height="1.5"/>
+                                <rect key="frame" x="80" y="226" width="215" height="1.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="1"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -740,8 +775,8 @@
                             <constraint firstItem="JCv-os-oRV" firstAttribute="top" secondItem="yhA-GK-x3X" secondAttribute="bottom" constant="130" id="K2N-eD-pKn"/>
                             <constraint firstItem="JCv-os-oRV" firstAttribute="centerX" secondItem="g7C-YR-KgO" secondAttribute="centerX" id="RGR-Ss-pdV"/>
                             <constraint firstAttribute="trailing" secondItem="JCv-os-oRV" secondAttribute="trailing" constant="50" id="RUa-Yz-Hbf"/>
-                            <constraint firstItem="xz4-pP-RWW" firstAttribute="leading" secondItem="g7C-YR-KgO" secondAttribute="leading" constant="50" id="X8k-2i-gMJ"/>
-                            <constraint firstAttribute="trailing" secondItem="xz4-pP-RWW" secondAttribute="trailing" constant="50" id="XyQ-P8-8ci"/>
+                            <constraint firstItem="xz4-pP-RWW" firstAttribute="leading" secondItem="g7C-YR-KgO" secondAttribute="leading" constant="80" id="X8k-2i-gMJ"/>
+                            <constraint firstAttribute="trailing" secondItem="xz4-pP-RWW" secondAttribute="trailing" constant="80" id="XyQ-P8-8ci"/>
                             <constraint firstAttribute="trailing" secondItem="Cfm-fA-DIv" secondAttribute="trailing" id="e86-2p-MvX"/>
                             <constraint firstItem="bL6-rG-bhY" firstAttribute="top" secondItem="Cfm-fA-DIv" secondAttribute="bottom" id="lOe-Hg-kLp"/>
                             <constraint firstItem="Cfm-fA-DIv" firstAttribute="top" secondItem="xz4-pP-RWW" secondAttribute="bottom" constant="151.5" id="t2h-0T-TJR"/>

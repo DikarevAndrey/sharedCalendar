@@ -16,7 +16,7 @@ class FirstStepRegistrationViewController: UIViewController, UITextFieldDelegate
     
     let nextBarButtonItem = UIBarButtonItem(
         title: "Next",
-        style: .plain,
+        style: .bordered,
         target: self,
         action: #selector(nextAction)
     )
@@ -92,7 +92,7 @@ class LastStepRegistrationViewController: UIViewController, UITextFieldDelegate 
     
     let registerBarButtonItem = UIBarButtonItem(
         title: "Register",
-        style: .plain,
+        style: .done,
         target: self,
         action: #selector(registerAction)
     )

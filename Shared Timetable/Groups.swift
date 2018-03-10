@@ -26,7 +26,6 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         if user.relogin {
-            print("relogin: true")
             getData()
         }
     }
@@ -94,8 +93,8 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
                         let dictionary = jsonObject["groups"] as? [[String:Any]]
                         for groupInfo in dictionary! {
                             let group = Group()
-                            group.id = groupInfo["id"] as? String
-                            group.name = groupInfo["name"] as? String
+                            group.id = groupInfo["id"] as? String ?? ""
+                            group.name = groupInfo["name"] as? String ?? ""
                             print(group.name!)
                             print(group.id!)
                             groups.append(group)
@@ -103,6 +102,8 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
                         //Main thread implementation
                         DispatchQueue.main.async {
                             self.groups = groups
+                            //End of groups information receiving
+                            user.relogin = false
                         }
                     }
                     //Main thread implementation
@@ -110,15 +111,14 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
                         self.tableView.reloadData()
                     }
                 } else {
-                    print("json failed")
+                    print("JSON failed")
                 }
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-            }.resume()
+        }.resume()
         
-        //End of groups information receiving
-        user.relogin = false
+
     }
     
     //Logging out
@@ -130,6 +130,7 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
             defaults.setValue("", forKey: "password")
             defaults.synchronize()
             user.relogin = true
+            user.updateFavorites = true
             self.performSegue(withIdentifier: "authorization", sender: nil)
         }
         alertController.addAction(yesAction)

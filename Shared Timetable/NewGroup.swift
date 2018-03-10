@@ -11,6 +11,7 @@ import CalendarKit
 import Foundation
 
 var members = [String]()
+var usersFound = [String]()
 
 class MembersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -69,53 +70,60 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
         if !searchText.isEmpty && !searchTextHasSpace && asciiCapable(s: searchText) {
-            let postString = "key=\(searchText)"
-            let myURL = URL(string: "http://188.166.110.14/find_users?\(postString)")!
-            URLSession.shared.dataTask(with: myURL) { (data, response, error) -> Void in
-                
-                guard let response = response as? HTTPURLResponse else {
-                    // Error handle
-                    return
+            
+            for u in user.favorites {
+                if u.lowercased().hasPrefix(searchText.lowercased()) {
+                    usersFound.append(u)
                 }
-                guard let data = data else {
-                    print("No data received")
-                    return
-                }
-                do {
-                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-                        self.amountOfUsers = jsonObject["amount"] as? Int
-                        if self.amountOfUsers! > 0 {
-                            let users = jsonObject["users"] as? [String]
-                            let defaults = UserDefaults.standard
-                            let userLogin = defaults.string(forKey: "login")
-                            var usersCopy = [String]()
-                            for user in users! {
-                                if user != userLogin {
-                                    usersCopy.append(user)
-                                }
-                                else {
-                                    self.amountOfUsers! = self.amountOfUsers! - 1
-                                }
-                            }
-                            DispatchQueue.main.async {
-                                //print(self.amountOfUsers!)
-                                self.users = usersCopy
-                            }
-                        }
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    } else {
-                        print("json failed")
-                    }
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                }
-                }.resume()
-        }
-        else {
-            amountOfUsers = 0
-            tableView.reloadData()
+            }
+//            let postString = "key=\(searchText)"
+//            let myURL = URL(string: "http://188.166.110.14/find_users?\(postString)")!
+//            URLSession.shared.dataTask(with: myURL) { (data, response, error) -> Void in
+//
+//                guard let response = response as? HTTPURLResponse else {
+//                    // Error handle
+//                    return
+//                }
+//                guard let data = data else {
+//                    print("No data received")
+//                    return
+//                }
+//                do {
+//                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+//                        self.amountOfUsers = jsonObject["amount"] as? Int
+//                        if self.amountOfUsers! > 0 {
+//                            let users = jsonObject["users"] as? [String]
+//                            let defaults = UserDefaults.standard
+//                            let userLogin = defaults.string(forKey: "login")
+//                            var usersCopy = [String]()
+//                            for user in users! {
+//                                if user != userLogin {
+//                                    usersCopy.append(user)
+//                                }
+//                                else {
+//                                    self.amountOfUsers! = self.amountOfUsers! - 1
+//                                }
+//                            }
+//                            DispatchQueue.main.async {
+//                                //print(self.amountOfUsers!)
+//                                self.users = usersCopy
+//                            }
+//                        }
+//                        DispatchQueue.main.async {
+//                            self.tableView.reloadData()
+//                        }
+//                    } else {
+//                        print("json failed")
+//                    }
+//                } catch let error as NSError {
+//                    print(error.localizedDescription)
+//                }
+//                }.resume()
+//        }
+//        else {
+//            amountOfUsers = 0
+//            tableView.reloadData()
+//        }
         }
     }
     
@@ -132,10 +140,9 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     //создание новой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "newMemberCell") as! NewMemberCell //cell - ячейка таблицы
-        let user = users[indexPath.row]
-        cell.cellLabel.text = user
-        if members.contains(user) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "newMemberCell") as! NewMemberCell //cell - ячейка таблицы=
+        cell.cellLabel.text = usersFound[indexPath.row]
+        if members.contains(usersFound[indexPath.row]) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -144,10 +151,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     //возвращает количество ячеек
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if amountOfUsers == nil {
-            return 0
-        }
-        return amountOfUsers!
+        return usersFound.count
     }
     //возвращает количество секций, то есть 1
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -160,7 +164,7 @@ class MembersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = users[indexPath.row]
+        let user = usersFound[indexPath.row]
         if members.contains(user) {
             var copyMembers = [String]()
             for m in members {
@@ -209,7 +213,6 @@ class GroupCreatingViewController: UIViewController, UITableViewDataSource, UITa
         groupNameTextFieldConstraint.constant = screenHeight/5
         stripLabelConstraint.constant = screenHeight/100
         membersTableViewConstraint.constant = screenHeight/15
-        
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.white
         navigationItem.rightBarButtonItem = createBarButtonItem
@@ -239,7 +242,89 @@ class GroupCreatingViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
     func createAction() {
-        print("kek")
+        let admin = UserDefaults.standard.value(forKey: "login") as? String ?? ""
+        let groupName = groupNameTextField.text ?? ""
+        var groupID: Int?
+        let myUrl = URL(string: "http://188.166.110.14/new_group?")!
+        let postString = "group_name=\(groupName)&group_admin=\(admin)"
+        var request = URLRequest(url: myUrl)
+        request.httpMethod = "POST"
+        request.httpBody = postString.data(using: .utf8)
+        URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            DispatchQueue.main.async {
+                guard let response = response as? HTTPURLResponse else {
+                    // Error handle
+                    print("No internet connection")
+                    return
+                }
+                let status = response.statusCode
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                //print("response status: \(status)")
+                switch status {
+                case 200:
+                    guard let data = data else {
+                        print("No data received")
+                        return
+                    }
+                    do {
+                        print("receiving groupID")
+                        if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                            groupID = jsonObject["group_id"] as? Int
+                            if groupID != nil {
+                                var postString1 = "members[]=\(admin)"
+                                for member in members {
+                                    postString1 += "&members[]=\(member)"
+                                }
+                                postString1 += "&group_id=\(groupID!)"
+                                print("postString1: " + postString1)
+                                let myUrl1 = URL(string: "http://188.166.110.14/add_users_to_group?")!
+                                var request1 = URLRequest(url: myUrl1)
+        
+                                request1.httpMethod = "POST"
+                                request1.httpBody = postString1.data(using: .utf8)
+                                URLSession.shared.dataTask(with: request1) { (_, response1, error1) -> Void in
+                                        
+                                    guard let response1 = response1 as? HTTPURLResponse else {
+                                        // Error handle
+                                        print("Group creating: error while sending request")
+                                        return
+                                    }
+                                    let status1 = response1.statusCode
+                                    if let error1 = error1 {
+                                        print(error1.localizedDescription)
+                                    }
+                                    //print("response status: \(status)")
+                                    switch status1 {
+                                    case 200:
+                                        print("Group created, users added: OK")
+                                        DispatchQueue.main.async {
+                                            user.relogin = true
+                                            self.dismiss(animated: true, completion: nil)
+                                        }
+                                    case 500:
+                                        print("Group creating: not created")
+                                    default:
+                                        print("Group creating: unknown status code")
+                                    }
+                                    //print("responseString = \(responseString)")
+                                }.resume()
+                            }
+                        } else {
+                            print("JSON failed")
+                        }
+                    } catch let error1 as NSError {
+                        print(error1.localizedDescription)
+                    }
+                case 500:
+                    print("Group creating: group not created")
+                default:
+                    print("unknown status code")
+                }
+            //print("responseString = \(responseString)")
+            }
+        }.resume()
     }
     
     //создание новой ячейки
