@@ -32,6 +32,14 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isTranslucent = false
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.backgroundView = refreshControl
+        }
     }
     
     func getData() {
@@ -179,6 +187,12 @@ class GroupsViewController: UIViewController, UITableViewDataSource, UITableView
         controller.navigationItem.title = groups[indexPath.row].name
         show(controller, sender: nil)
         //performSegue(withIdentifier: "open", sender: nil)
+    }
+    
+    @objc func refresh(_ refreshControl: UIRefreshControl) {
+        tableView.reloadData()
+        // Do your job, when done:
+        refreshControl.endRefreshing()
     }
     
     @IBAction func newGroupAction(_ sender: Any) {
