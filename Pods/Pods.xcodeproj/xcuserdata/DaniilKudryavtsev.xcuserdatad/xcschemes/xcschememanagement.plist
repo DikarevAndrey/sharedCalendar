@@ -13,8 +13,15 @@
 		</dict>
 		<key>CalendarKit 12.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>14</integer>
+		</dict>
+		<key>CalendarKit 14.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
 		</dict>
 		<key>CalendarKit 2.xcscheme</key>
 		<dict>
@@ -81,6 +88,8 @@
 		</dict>
 		<key>ObjectMapper 6.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
